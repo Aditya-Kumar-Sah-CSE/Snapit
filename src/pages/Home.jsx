@@ -1,94 +1,79 @@
+import { useState, useMemo } from "react";
 import Hero from "../components/Hero";
 import Category from "../components/Category";
 import ProductCard from "../components/ProductCard";
+import { products } from "../data/products";
+import { SlidersHorizontal, ChevronDown } from "lucide-react";
 
-const products = [
-  {
-    id: 1,
-    name: "Organic Dal",
-    price: 180,
-    image: "https://images.unsplash.com/photo-1615485737651-580f0a8b6b4c?auto=format&fit=crop&w=500&q=80",
+const Home = ({ searchTerm }) => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [sortBy, setSortBy] = useState("recommended");
 
-  },
-  {
-    id: 2,
-    name: "Fresh Apples",
-    price: 220,
-    image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: 3,
-    name: "Whole Wheat",
-    price: 160,
-    image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: 4,
-    name: "Spices Pack",
-    price: 90,
-    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: 5,
-    name: "Fresh Vegetables",
-    price: 140,
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: 6,
-    name: "Snacks Combo",
-    price: 250,
-    image: "https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-  id: 7,
-  name: "Dry Fruits",
-  price: 320,
-  image:
-    "https://images.unsplash.com/photo-1590080877777-7bdf8c82d8f2?auto=format&fit=crop&w=500&q=80",
+  const filteredProducts = useMemo(() => {
+    let result = products.filter((product) => {
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes((searchTerm || "").toLowerCase());
+      const matchesCategory = selectedCategory
+        ? product.category === selectedCategory
+        : true;
+      return matchesSearch && matchesCategory;
+    });
 
-},
-{
-  id: 8,
-  name: "Rice Premium",
-  price: 280,
-  image:
-    "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80",
-},
-{
-  id: 9,
-  name: "Cooking Oil",
-  price: 190,
-  image:
-    "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&fit=crop&w=500&q=80",
-},
+    // Apply Sorting
+    if (sortBy === "price-low") {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortBy === "price-high") {
+      result.sort((a, b) => b.price - a.price);
+    } else if (sortBy === "rating") {
+      result.sort((a, b) => b.rating - a.rating);
+    }
 
-{
-  id: 10,
-  name: "Breakfast Cereals",
-  price: 210,
-  image:
-    "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=400&q=80",
-},
+    return result;
+  }, [searchTerm, selectedCategory, sortBy]);
 
-];
-
-
-
-const Home = () => {
   return (
     <>
       <Hero />
-      <Category />
+
+      <Category
+        activeCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
 
       <section className="products-section">
-        <h2 className="section-title">Popular Products</h2>
-
-        <div className="product-grid">
-          {products.map((item) => (
-            <ProductCard key={item.id} product={item} />
-          ))}
+        <div className="flex justify-between items-center mb-6 px-4 md:px-8">
+          <h2 className="section-title text-2xl font-bold text-gray-800">
+            {selectedCategory ? `${selectedCategory} Products` : "Popular Products"}
+          </h2>
+          <span className="text-gray-500">
+            {filteredProducts.length} items found
+          </span>
         </div>
+
+        {filteredProducts.length > 0 ? (
+          <div className="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filteredProducts.map((item) => (
+              <ProductCard key={item.id} product={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-24 bg-white rounded-3xl border-2 border-dashed border-gray-200">
+            <div className="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <SlidersHorizontal size={32} className="text-gray-300" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">No products found</h3>
+            <p className="text-gray-500 max-w-xs mx-auto">
+              We couldn't find any products matching your current search or filters.
+            </p>
+            <button
+              onClick={() => { setSelectedCategory(null); }}
+              className="mt-6 text-[#0E2931] font-bold hover:underline"
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
       </section>
     </>
   );
