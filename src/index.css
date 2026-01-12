@@ -273,6 +273,7 @@ body {
 .products-section {
   padding: 20px 6% 50px;
   background: linear-gradient(180deg, #f5f6f5, #eef1f0);
+  padding: 5rem;
 }
 
 /* TITLE */
@@ -282,6 +283,7 @@ body {
   margin-bottom: 25px;
   text-align: center;
   color: #0e2931;
+  padding: 1rem;
 }
 
 /* GRID */
@@ -289,6 +291,9 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   gap: 18px;
+  padding-top: 1rem;
+
+  padding-bottom: 2rem;
 }
 
 /* CARD */
@@ -515,9 +520,4 @@ body {
     height: auto;
     text-align: center;
   }
-}
-
-/* FIX: Force padding on category buttons */
-.category-btn-custom {
-  padding: 12px 40px !important;
 }
