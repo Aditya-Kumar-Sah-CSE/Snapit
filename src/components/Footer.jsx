@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0E2931] text-white pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-10 md:px-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+    <footer className="bg-[#0E2931] text-white pt-32 pb-24 md:min-h-50 flex flex-col justify-center items-center  ">
+      <div className="max-w-7xl mx-auto px-10 md:px-32 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-10  min-h-38">
 
           {/* Brand Section */}
           <div className="space-y-6 ">
@@ -62,9 +62,9 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-5 pr-14 text-xs focus:outline-none focus:bg-white/10 focus:border-green-400/50 transition-all font-medium"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-5 h-8 pr-14 text-xs focus:outline-none focus:bg-white/10 focus:border-green-400/50 transition-all font-medium"
               />
-              <button className="absolute right-2 top-2 bottom-2 bg-green-400 text-[#0E2931] w-8 rounded-xl flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-green-400/20 active:scale-95">
+              <button className="absolute right-2 top-1 bottom-1 bg-green-400 text-[#0E2931] w-8 rounded-xl flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-green-400/20 active:scale-95 h-6 ">
                 <Send size={16} />
               </button>
             </div>
@@ -73,7 +73,7 @@ const Footer = () => {
         </div>
 
         {/* Contact Strip */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 bg-white/5 rounded-3xl border border-white/10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3   gap-8 p-6 bg-white/5 rounded-3xl border border-white/10 mb-10">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-2xl bg-green-400/10 flex items-center justify-center text-green-400">
               <Phone size={18} />
@@ -98,7 +98,7 @@ const Footer = () => {
             </div>
             <div>
               <p className="text-[9px] uppercase font-black text-white/40 tracking-widest">Store Location</p>
-              <p className="font-bold text-sm">Green Valley, Delhi</p>
+              <p className="font-bold text-sm">Bhagalpur , Bihar</p>
             </div>
           </div>
         </div>
