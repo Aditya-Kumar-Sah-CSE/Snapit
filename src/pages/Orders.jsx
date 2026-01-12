@@ -23,8 +23,8 @@ const Orders = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 md:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-10">
+      <div className= " flex flex-col justify-center items-center max-w-4xl mx-auto ">
+        <div className="flex flex-col justify-between items-center ">
           <h1 className="text-3xl font-bold text-[#0E2931]">My Orders</h1>
           <Link to="/" className="text-[#0E2931] font-bold hover:underline flex items-center gap-1">
             Continue Shopping <ChevronRight size={18} />
@@ -32,10 +32,10 @@ const Orders = () => {
         </div>
 
         {orders.length > 0 ? (
-          <div className="space-y-6">
+          <div className="space-y-6 md:min-w-400 flex  flex-col justify-center items-center h-80 gap-5 ">
             {orders.map((order) => (
-              <div key={order.id} className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 transition-all hover:shadow-md">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-50">
+              <div key={order.id} className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 transition-all hover:shadow-md ">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-50 min-h-20 ">
                   <div className="flex items-center gap-4">
                     <div className="bg-gray-50 p-3 rounded-2xl text-[#0E2931]">
                       <ShoppingBag size={24} />

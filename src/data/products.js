@@ -1,3 +1,5 @@
+// Note: To adjust the padding of the product display in the UI, please modify 'src/components/ProductCard.jsx'.
+// This file only contains the static data for the products.
 export const products = [
     {
         id: 1,

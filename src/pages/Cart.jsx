@@ -12,7 +12,7 @@ const Cart = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center p-4">
+      <div className="min-h-[70vh] flex flex-col items-center justify-center p-4 ">
         <div className="bg-gray-50 p-8 rounded-full mb-6">
           <ShoppingBag size={64} className="text-gray-300" />
         </div>

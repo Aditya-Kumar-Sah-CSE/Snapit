@@ -16,10 +16,10 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6 ">
           <div className="space-y-4">
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+            <div className="relative ">
+              <Mail className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="email"
                 required
@@ -28,7 +28,7 @@ const Login = () => {
               />
             </div>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="password"
                 required

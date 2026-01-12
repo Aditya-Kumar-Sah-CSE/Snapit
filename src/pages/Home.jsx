@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import Category from "../components/Category";
 import ProductCard from "../components/ProductCard";
 import { products } from "../data/products";
-import { SlidersHorizontal, ChevronDown } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 
 const Home = ({ searchTerm }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -36,7 +36,7 @@ const Home = ({ searchTerm }) => {
     <>
       <Hero />
 
-      <Category
+      <Category 
         activeCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
