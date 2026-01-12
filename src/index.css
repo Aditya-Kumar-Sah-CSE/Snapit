@@ -521,3 +521,8 @@ body {
     text-align: center;
   }
 }
+
+/* FIX: Force padding on category buttons */
+.category-btn-custom {
+  padding: 16px 48px !important;
+}
