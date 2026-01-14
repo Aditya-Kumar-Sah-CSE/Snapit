@@ -18,12 +18,12 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="group bg-white rounded-2xl !p-6 md:max-w-100 shadow-sm hover:shadow-md transition-all md:min-w-40 gap-5 duration-300 border border-gray-100 flex flex-col">
-      <Link to={`/products/${product.id}`} className="block relative overflow-hidden rounded-xl bg-gray-50 mb-4 h-48 !p-4">
+    <div className="group bg-white rounded-2xl p-6! md:max-w-100 shadow-sm hover:shadow-md transition-all md:min-w-40 gap-5 duration-300 border border-gray-100 flex flex-col">
+      <Link to={`/products/${product.id}`} className="block relative overflow-hidden rounded-xl bg-gray-50 mb-4 h-48 p-4!">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-110  !rounded-[0.5rem]  transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110  rounded-xl!  transition-transform duration-500"
         />
       </Link>
 

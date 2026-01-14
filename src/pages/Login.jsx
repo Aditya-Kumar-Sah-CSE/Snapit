@@ -1,91 +1,143 @@
-import React from 'react';
-import { Mail, Lock, ArrowRight, Github } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import auth1 from "../assets/logo.png"
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { Label } from '@radix-ui/react-label'
+import { Input } from '../components/ui/input'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Link ,useNavigate} from 'react-router-dom'
+import { Button } from '../components/ui/button'
+import axios from "axios"
+import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading, setUser } from '../redux/authSlice'
+// import store from '../redux/store'
+
+
 
 const Login = () => {
+
+const [showPassword,setShowPassword] = useState(true);
+const {loading} = useSelector(store => store.auth )
+
+const navigate = useNavigate()
+const dispatch = useDispatch()
+
+const [input,setInput] = useState({
+
+  email:"",
+  password:""
+})
+
+const handleChange = (e) =>{
+  const {name,value} = e.target
+  setInput((prev) => ({
+    ...prev,
+    [name]:value
+  }))
+
+}
+const handleSubmit = async (e)=>{
+  e.preventDefault()
+  console.log(input)
+
+
+try {
+  dispatch(
+    setLoading(true)
+  )
+
+
+  const res = await axios.post(`http://localhost:8000/api/v1/user/login`,input,{
+    headers:{
+      "Content-Type":"application/json"
+    },
+    withCredentials:true
+  })
+if(res.data.success){
+  navigate('/')
+  dispatch(setUser(res.data.user))
+  toast.success(res.data.message)
+}
+
+
+}
+catch(error){
+  console.log(error.response)
+}
+finally{
+  dispatch(
+      setLoading(false)
+  )
+
+}
+
+
+}
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-xl border border-gray-100">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-black text-[#0E2931]">Welcome Back</h2>
-          <p className="mt-2 text-sm text-gray-500">
-            Don't have an account?{' '}
-            <Link to="/signup" className="font-bold text-[#0E2931] hover:underline">
-              Create an account
-            </Link>
-          </p>
-        </div>
+   <div className='flex h-screen md:pt-14  '>
+     <div className="hidden md:block md:h-1xl ">
+      <img src={auth1} alt=""  />
+     </div>
+<div className="flex justify-center items-center flex-1 px-4 md:px-0">
+<Card className="w-full max-w-md p-6 shadow-lg rounded-2xl dark:bg-gray-800 dark:border-gray-600" >
+<CardHeader>
+  <CardTitle>
+    <h1 className='text-center text-xl font-semibold'>Login into your account</h1>
 
-        <form className="mt-8 space-y-6 ">
-          <div className="space-y-4">
-            <div className="relative ">
-              <Mail className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="email"
-                required
-                className="block w-full pl-10 pr-4 py-4 border border-gray-100 bg-gray-50 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0E2931]/10 focus:bg-white transition-all sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div className="relative">
-              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="password"
-                required
-                className="block w-full pl-10 pr-4 py-4 border border-gray-100 bg-gray-50 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0E2931]/10 focus:bg-white transition-all sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-          </div>
+  </CardTitle>
+  <p className='mt-2 text-sm font-serif text-center dark:text-gray-300'>Enter your details below to login your account</p>
+</CardHeader>
+<CardContent>
+  <form action="" onSubmit={handleSubmit} className="space-y-4">
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="h-4 w-4 text-[#0E2931] border-gray-300 rounded"
-              />
-              <label className="ml-2 block text-sm text-gray-900 font-medium">
-                Remember me
-              </label>
-            </div>
+    <div>
+  <Label>Email</Label>
+  <Input
+  type="email"
+  placeholder="Email Address"
+  name="email"
+    className="dark:border-gray-600 dark:bg-gray-900"
+    value={input.email}
+    onChange={handleChange}
+  />
+</div>
+  <div className='relative'>
+  <Label>Password</Label>
+  <Input
+  type={
+    showPassword ? "text" : "password"
+  }
+  placeholder="Enter your password"
+  name="password"
+    className="dark:border-gray-600 dark:bg-gray-900"
+    value={input.password}
+    onChange={handleChange}
+  />
+  <button onClick={() => setShowPassword(!showPassword)} type='button' className='absolute right-3 top-8 text-gray-500 '>
+    {
+      showPassword ? <EyeOff size={20}/> : <Eye size={20} />
+    }
 
-            <div className="text-sm">
-              <a href="#" className="font-bold text-[#0E2931] hover:underline">
-                Forgot password?
-              </a>
-            </div>
-          </div>
+  </button>
+</div>
+<Button type="submit" className="w-full">{
+loading ? (
+<>
+<Loader2 className='mr-2 w-4 animate-spin'  />
+please await...
+</>
 
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-black rounded-2xl text-white bg-[#0E2931] hover:bg-[#1a4a58] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E2931] transition-all shadow-lg shadow-[#0E2931]/20"
-            >
-              Sign in
-            </button>
-          </div>
+) :("Login")
+}</Button>
+<p className='text-center text-gray-600 dark:text-gray-300'>Already have an account <Link to={"/signup"}><span className='underline cursor-pointer hover:text-gray-800 dark:hover:text-gray-100'> Sign up</span></Link> </p>
+  </form>
+</CardContent>
 
-          <div className="relative mt-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-100"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500 font-medium uppercase tracking-widest text-[10px]">Or continue with</span>
-            </div>
-          </div>
+</Card>
+</div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-3 border border-gray-100 rounded-2xl hover:bg-gray-50 transition-all font-bold text-gray-700">
-              <Github size={20} /> Github
-            </button>
-            <button className="flex items-center justify-center gap-2 py-3 border border-gray-100 rounded-2xl hover:bg-gray-50 transition-all font-bold text-gray-700">
-              <span className="text-xl">G</span> Google
-            </button>
-          </div>
-        </form>
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

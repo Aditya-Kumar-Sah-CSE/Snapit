@@ -8,7 +8,7 @@ const Category = ({ activeCategory, onSelectCategory }) => {
           <button
             key={i}
             onClick={() => onSelectCategory(cat === "All" ? null : cat)}
-            className={`category-btn-custom !my-6 !px-10 !py-4 rounded-full border transition-all duration-300 font-medium cursor-pointer ${(activeCategory === cat || (cat === "All" && !activeCategory))
+            className={`category-btn-custom my-6! px-10! py-4! rounded-full border transition-all duration-300 font-medium cursor-pointer ${(activeCategory === cat || (cat === "All" && !activeCategory))
               ? "bg-[#0E2931] text-white border-[#0E2931] "
               : "bg-white text-gray-600 border-gray-200 hover:border-[#0E2931] hover:text-[#0E2931]"
               }`}

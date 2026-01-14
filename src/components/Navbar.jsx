@@ -1,10 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useCart } from "../context/CartContext";
 
+import { Button } from "./ui/button";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../components/ui/avatar"
+import { useSelector,useDispatch } from 'react-redux'
+import { toast } from 'sonner'
+import axios from 'axios'
+import { setUser } from '../redux/authSlice'
 const Navbar = ({ onSearch }) => {
   const { cartCount } = useCart();
+
+// for login / logout 
+
+  const {user} = useSelector(store => store.auth)
+ 
+const  dispatch = useDispatch()
+const navigate = useNavigate()
+const logoutHandler = async () => {
+  try {
+    const res = await axios.get(`http://localhost:8000/api/v1/user/logout`,
+      {withCredentials:true}
+    )
+if(res.data.success){
+  navigate("/")
+  dispatch(setUser(null))
+  toast.success(res.data.message)
+}
+
+  } catch (error) {
+    console.log('error', error)
+    toast.error(error)
+  }
+}
 
   return (
     <nav className="navbar">
@@ -36,7 +69,29 @@ const Navbar = ({ onSearch }) => {
       {/* DIV 2 : LOGIN + CART */}
       <div className="nav-right">
         <div className="account">
-          <Link to='/login'>Login</Link>
+{/* login /log out */}
+
+         {
+    user ? 
+    <div>
+<div className="ml-7 md:flex gap-2 "> 
+ <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+      
+      <Button onClick={logoutHandler}>Logout</Button> 
+</div>
+    </div> : <div
+    className='ml-7 md:flex gap-2'
+    >
+      <Link to={"/login"}>
+      <Button >Login</Button>  </Link>
+      <Link to={"/signup"}><Button>Signup</Button></Link>
+      
+    
+    </div>
+  }
         </div>
         <div className="cart">
           <Link to='/cart'> 🛒
