@@ -11,6 +11,9 @@ import axios from 'axios'
 import { setLoading } from '../redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
+import.meta.env.VITE_API_URL
+
+
 const Signup = () => {
 
 const [showPassword , setShowPassword] = useState(false);
@@ -40,7 +43,7 @@ const handleSubmit = async(e) =>{
 
   try{
     dispatch(setLoading(true))
-const res = await axios.post(`http://localhost:8000/api/v1/user/register`,user,{
+const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/register`,user,{
   headers:{
     "Content-Type":"application/json"
   },

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setUser } from '../redux/authSlice'
 // import store from '../redux/store'
 
+import.meta.env.VITE_API_URL
 
 
 const Login = () => {
@@ -47,12 +48,18 @@ try {
   )
 
 
-  const res = await axios.post(`http://localhost:8000/api/v1/user/login`,input,{
+  const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/login`,input,{
     headers:{
       "Content-Type":"application/json"
     },
     withCredentials:true
   })
+  // const res = await axios.post(`http://localhost:8000/api/v1/user/login`,input,{
+  //   headers:{
+  //     "Content-Type":"application/json"
+  //   },
+  //   withCredentials:true
+  // })
 if(res.data.success){
   navigate('/')
   dispatch(setUser(res.data.user))
