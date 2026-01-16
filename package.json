@@ -1,0 +1,8 @@
+{
+    "name": "snapit-root",
+    "private": true,
+    "scripts": {
+        "install-all": "npm install --prefix frontend && npm install --prefix backend",
+        "build": "npm run build --prefix frontend"
+    }
+}
